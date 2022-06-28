@@ -1,0 +1,388 @@
+Important problems in c++ for future reference:
+=========================================================
+You are given an array arr(0-based index). The size of the array is given by sizeOfArray. 
+You need to insert an element at given index and print the modified array.
+eg: 
+Input:
+sizeOfArray = 6
+arr[] = {1, 2, 3, 4, 5}
+index = 2, element = 90
+Output: 1 2 90 3 4 5
+Explanation: 90 is inserted at index 
+2(0-based indexing). After inserting,
+array elements are like 
+1, 2, 90, 3, 4, 5.
+program: 
+ 
+ 2)
+ void insertAtIndex(int arr[], int sizeOfArray, int index, int element)
+   {
+       for(int i = sizeOfArray - 1; i > index; i--){
+           arr[i] = arr[i-1];
+       }
+       arr[index] = element;
+   }
+ -----------------------------------------------------------------------------------------
+ 
+ Given a string str containing alphanumeric characters. The task is to calculate the sum of all the numbers present in the string.
+  
+  int findSum(string str)
+    {
+    	
+    	// Your code here
+    	 int sum=0;
+    int num=0;
+
+    for( int i=0 ; i<str.length(); i++)
+    {
+       
+        if(int(str[i])>=48 && int(str[i])<=57) // 48-57: ascii values of characters for 0-9 numbers.
+        {
+            num=num*10+ ( int(str[i])-48); // int(str[i] = typecastes the character value to integer which is, character ascci value in integer for 1 is 49)
+        }                                  		likewise 2-50, 3-51, 4-52, 5-53, 6-54, 7-55, 8-56, 9-57
+        else
+        {
+            sum =sum+ num;
+            num=0;
+        }
+    }
+    sum=sum+num;
+    
+    return sum;
+    	
+    }
+---------------------------------------------------------------------
+
+3)
+Your task is to implement the function strstr. The function takes two strings as arguments (s,x) and  locates the occurrence of the string x in the string s. 
+The function returns and integer denoting the first occurrence of the string x in s (0 based indexing).
+
+ int strstr(String s, String x)
+   {
+      // Your code here
+      int n=s.length();
+      int k=x.length();
+      
+      for(int i=0;i<=n-k;i++)
+      {
+          if(x.equals(s.substring(i,i+k)))
+          return i;
+      }
+      return -1;
+      
+   }
+}
+------------------------------------------------------
+FINDING NUMBER OF DIGITS IN A NUMBER:
+	There are three ways, iterative solution, recursive solution, logarithmic solution.
+		We already know about the iterative solution.
+		recursive solution: 
+		
+		int count(long n){
+		if(n == 0)
+			return 0;
+		return 1+count(n/10);
+		}
+		logarithmic solution:
+		
+		int count(long n){
+		return floor(log10(n)+1);
+		}
+--------------------------------------------------------
+PALINDROME NUMBER:
+
+#include <iostream>
+#include <limits.h>
+using namespace std;
+
+bool isPal(int n)
+{
+	int rev = 0;
+
+	int temp = n;
+	while(temp != 0)
+	{
+		int ld = temp % 10;
+
+		rev = rev * 10 + ld;
+
+		temp = temp / 10;
+	}	
+
+	return rev==n;
+}
+int main() {
+    
+    	int number = 4553;
+    	
+    	cout<<(bool)isPal(number);
+    	
+    	return 0;
+}
+---------------------------------------------
+SIEVE OF ERATOSTHENES:
+Prints prime numbers which are less than or equal to given N number:
+
+i/p: n = 10
+o/p: 2 3 5 7
+
+i/p: n = 23
+o/p: 2 3 5 7 11 13 17 19 23
+
+Naive solution is just printing prime number until n numbers.
+
+Efficient method:
+	It takes a boolean array with values except at index 0 and 1 as true.
+	-then it starts alloting every non prime number as false until N indexes.
+	- finally the indexes only prime number will be marked as true.
+	-we will print those indexes and those are prime numbers.
+	- We mark false by taking the multiples of 2,3,5(multiples of 4 were already traversed by 2)
+	- For N = 20
+		T T F T F T F F F  T  F  T  F  F  F  Y  F  T  F
+	0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20
+	
+	multiples of 2: 4,6,7,10,12,14,16,18,20..........
+	multiples of 3: 6,9,12,15,18.................
+	multiples of 5: 10,15,20,....................
+Implementation:
+	void sieve(int n)
+{
+	if(n <= 1)
+		return;
+
+	bool isPrime[n+1];
+
+	fill(isPrime, isPrime + n + 1, true);
+
+	for(int i=2; i*i <= n; i++)
+	{
+		if(isPrime[i])
+		{
+			for(int j = i*i; j <= n; j = j+i)
+			{
+				isPrime[j] = false;
+			}
+		}
+	}
+
+	for(int i = 2; i<=n; i++)
+	{
+		if(isPrime[i])
+			cout<<i<<" ";
+	}
+}
+
+shorter way:
+
+---------------------------------------------
+GCD OR HCF OPTIMIZED SOLUTION:
+
+Euclidean algorithm:
+	Basic Idea:
+		Let 'b' be smaller than 'a'
+			gcd(a, b) = gcd(a-b, b).
+	#include <iostream>
+#include <limits.h>
+using namespace std;
+
+ int gcd(int a, int b)
+{
+	if(b==0)
+		return a;
+
+	return gcd(b, a % b);
+}
+
+int main() {
+    
+    	int a = 12, b = 15;
+    	
+    	cout<<gcd(a, b);
+    	
+    	return 0;
+}
+
+----------------------------------------------
+
+LCM OF TWO NUMBERS:
+
+
+ int gcd(int a, int b)
+{
+	if(b==0)
+		return a;
+
+	return gcd(b, a % b); // euclidean algorithm to find the gcd.
+}
+
+int lcm(int a, int b)
+{
+    return (a * b) / gcd(a, b); //
+}
+
+------------------------------------------
+CHECK FOR PRIME:
+	
+	Efficient code:
+	bool isPrime(int n)
+{
+	if(n==1)
+		return false;
+
+	for(int i=2; i*i<=n; i++)
+	{
+		if(n % i == 0)
+			return false; 
+	}
+
+	return true;
+}
+
+More efficient code for larger inputs.
+	bool isPrime(int n)
+{
+	if(n==1)
+		return false;
+
+	if(n==2 || n==3)
+		return true;
+
+	if(n%2==0 || n%3==0)
+		return false;
+
+	for(int i=5; i*i<=n; i=i+6)
+	{
+		if(n % i == 0 || n % (i + 2) == 0)
+			return false; 
+	}
+
+	return true;
+}
+-------------------------------------------
+PRIME FACTORS OF A NUMBER:
+
+	 Efficient code: Divisors always appera in pairs:
+	 let (x, y) be a pair.
+	 x*y = n
+	 if x<=y
+	 x*x <= n
+	 x<=sqrt(n)
+	 so in for loop the i will check from 2 to  sqrt(n).
+	 void printPrimeFactors(int n)
+{
+	if(n <= 1)
+		return;
+
+	for(int i=2; i*i<=n; i++)
+	{
+		while(n % i == 0)
+		{
+			cout<<i<<" ";
+
+			n = n / i;
+		}
+	}
+
+	if(n > 1)
+		cout<<n<<" ";
+
+	cout<<endl;
+}
+	 
+	 More efficicent code:
+	 A number n can be written as multiplications of powers of prime factors.
+	 12 = 2^2*3
+		12/2 = 6
+			6/2 = 3
+				3/3 = 1
+	 450 = 2^1*3^2*5^2
+		450/2 = 225
+			225/3 = 75
+				75/3 = 25
+					25/5 = 5
+						5/5 = 1
+	 
+	  void printPrimeFactors(int n)
+{
+	if(n <= 1)
+		return;
+
+	while(n % 2 == 0)
+	{
+		cout<<2<<" ";
+
+		n = n / 2;
+	}
+
+	while(n % 3 == 0)
+	{
+		cout<<3<<" ";
+
+		n = n / 3;
+	}
+
+	for(int i=5; i*i<=n; i=i+6)
+	{
+		while(n % i == 0)
+		{
+			cout<<i<<" ";
+
+			n = n / i;
+		}
+
+		while(n % (i + 2) == 0)
+		{
+			cout<<(i + 2)<<" ";
+
+			n = n / (i + 2);
+		}
+	}
+
+	if(n > 3)
+		cout<<n<<" ";
+
+	cout<<endl;
+}
+----------------------------------------
+DIVISORS OF A NUMBER:
+	efficicent method:
+	1) divisors always appear in pairs:
+		30:(1,30),(2,15),(3,10),(5,6)
+		
+	
+	2) one of the divisors in every pair is smaller than or equal to sqrt(n)
+		for every pair (x,y)
+			x*y = n
+			let x be the smaller, i.e, x<=y
+			x*x<=n
+			x<=sqrt(n)
+		 void printDivisors(int n)
+{
+	for(int i=1; i*i <= n; i++)
+	{
+		if(n % i == 0)
+		{
+			cout<<i<<" ";
+
+        
+			if(i != (n / i))
+				cout<<(n / i)<<" ";					
+		}
+	}
+}
+
+------------------------------
+SIMPLE EFFICIENT FACTORIAL SOLUTION:
+
+ long long factorial(int N) {
+       // Your code here
+       if(N<=1)
+      {
+          return 1;
+      }
+      return N*factorial(N-1);
+  }
+  
+ 
+ 
+	
