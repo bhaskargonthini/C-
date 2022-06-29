@@ -6,7 +6,7 @@ using namespace std;
 int main()
 {
     char str[] = "gfg";
-    cout << sizeof(str); size of string array is 4 here, since size of a character is 1 byte and (/0) at the end of the string.
+    cout << sizeof(str); size of character string array is 4 here, since size of a character is 1 byte and (/0) at the end of the string.
     return 0; works only for char string, string size will be constant as its defined.
 }
 strlen(str): finds the length of the string.
