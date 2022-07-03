@@ -49,7 +49,7 @@ Check Kth bit is set or not:
 					} 
 -----------------------------------------------------
 
-Count set bits:
+Count set bits: 
 	Naive solution:
 			unsigned int countSetBits(unsigned int n) 
 			{ 
@@ -62,6 +62,9 @@ Count set bits:
 				return count; 
 			} 
 	Method 2 (BRIAN AND KERNINGHAM ALGORITHM):
+	we can always unset the rightmost set bit in a number by doing 
+			AND operation with (n-1).
+			
 			unsigned int countSetBits(int n)             101000       n = 40
 			{                                            100111       n-1 = 39
 				   unsigned int count = 0;               	40 & 39 = 100000 = 32 
@@ -70,4 +73,64 @@ Count set bits:
 					  count++;                            011111      n-1 = 31     
 				   } 									  	32 & 31 = 0000000 = 0	
 				  return count; 
-			} 
+			}
+-----------------------------------------------------------
+Bit Difference: 
+
+			int countBitsFlip(int a, int b){
+					
+					// Your logic here
+					a^= b;
+					int count = 0;
+					while(a>0){
+						if(a & 1 == 1){               IMPORTANT LOGIC.
+							count++;
+						}
+						a = a>>1;
+					}
+					return count;
+				}		
+-------------------------------------------------------------------
+POWER OF 2:
+				Given  a number, we need to find whether the given number is power of 2 or not.
+					
+				bool isPow2(int n)
+				{
+					if(n == 0)
+						return false;
+					
+					return ((n & (n - 1)) == 0);
+				}			
+		what we doing here is, we unset the only set bit in the number,
+		if the resultant number is 0 then it is power of 2.
+			
+----------------------------------------------------------------------
+FIND THE ODD TIME OCCURING NUMBER IN AN ARRAY:
+	XOR Operator properties:
+		X^0 = X
+		X^Y = Y^X
+		X^(Y^Z) = (x^Y)^Z
+		X^X = 0
+		The logic is to do XOR operation on all numbers in an array.
+			since X^X = 0, the even occuring numbers will cancel out 
+			and only the odd occuring numbers will remain.
+			eg: arr[] = {4,3,4,4,4,5,5} no(4) = 4, no(3) = 1, no(5)=2
+			 so 3 will be the answer. 
+	
+	Another variation is to find the missing number in an array of n+1 numbers.
+		sol: do xor of all the number in that array and take the resultant array
+			and do xor with all the number from 1 to n.
+---------------------------------------------------------------------------
+
+SWAP ALL EVEN BITS AND ODD BITS:	
+	eg: The task is to swap all odd bits with even bits. For example, if the given number is 23 (00010111), 
+	it should be converted to 43(00101011). Here, every even position bit is swapped with adjacent bit on the 
+	right side(even position bits are highlighted in the binary representation of 23),
+	and every odd position bit is swapped with an adjacent on the left side.
+		 unsigned int swapBits(unsigned int n)
+   {
+    // Your code here
+       return (((n & 0xAAAAAAAA) >> 1) | ((n & 0x55555555) << 1));
+
+   }
+   
