@@ -1,0 +1,159 @@
+=========================RECURSION==================================
+
+
+Applications of recursion:
+1) Many algorithms techniques are based on recursion:
+	--dynamic programming - in dynamic programming the first step is to write the recursive solution
+		if we see any overlap situation then we optimiz it using dynamic programming.
+	--Backtracking
+	--divide and conquer, binary search,quicksort and merge sort
+2) Many problems inherently recursive	
+	--Tower Hanoi
+	-- DFS based traversals(DFS of graph amd Inorder/preorder/postorder traversal of tree).
+
+Recursive output practise 1:
+			void fun(int n)
+			{
+				if(n == 0)        o/p: fun(3)
+					return;                 ->3
+										   fun(2)
+				cout<<n<<endl;         		 ->2
+											fun(1)
+				fun(n - 1);					 ->1
+											  fun(0)	
+				cout<<n<<endl;					1<-
+			}								   2<-
+			int main() {					  3<-
+				
+				fun(3);				
+				
+				return 0;					
+			}	
+Recursive output practise 2:
+			void fun(int n)             
+			{
+				if(n == 0)           o/p: 1
+					return;				  2
+										  1
+				fun(n - 1); 			  3
+										  1
+				cout<<n<<endl;			  1
+										  2
+				fun(n - 1);				  1
+			}
+			int main() {
+				
+				fun(3);
+				
+				return 0;
+			}
+
+Example1: 
+	(logN with base 2)
+		int fun(int n)
+		{
+			if(n == 1)
+				return 0;
+			else
+				return 1 + fun(n / 2);  // for fun(n/3) - it will give log(n) base3
+		}
+		int main() {
+			
+			cout<<fun(16);
+			
+			return 0;
+		}
+
+Example 2(Binary Representation)
+		void fun(int n)
+		{
+			if(n == 0)
+				return;
+			
+			fun(n / 2);
+
+			cout<<(n % 2)<<endl; o/P for fun(7) = 111(which is binary equivalent of 7)
+		}
+		int main() {
+			
+			fun(7);
+			
+			return 0;
+		}
+
+example3:
+	printing numbers from 1 to N:
+			void printToN(int n)
+			{
+				if(n == 0)
+					return;
+				
+				printToN(n - 1);
+
+				cout<<n<<" ";
+
+			}
+	printing numbers from N to 1:
+			void printToN(int n)
+			{
+				if(n == 0)
+					return;
+
+				cout<<n<<" ";
+				
+				printToN(n - 1);
+
+			}
+======================================================
+TAIL RECURSION:	
+
+	A function is called tail recursive when the parent func is nothing to do when the clid func finished its execution
+		eg: printing number from N to 1.
+		Modern compilers optimizes tail rcursion problems awhich takes less time to excute than non tail recursions.
+			printing numbers from N to 1:
+			void printToN(int n)
+			{							START:     
+				if(n == 0)								
+					return;						
+												this is the kind of optimization modern compilers do for tail recursion.
+				cout<<n<<" ";						
+				
+				printToN(n - 1);		n = n-1				
+										goto START
+			}
+			
+	We can convert non tail recursion codes to tail recursion:
+		eg:
+			void printToN(int n)         
+			{
+				if(n == 0)
+					return;
+				
+				printToN(n - 1);
+
+				cout<<n<<" ";
+
+			}
+			
+			can be returned as:
+			
+			void fun(int n, int k)  // k should be given as 1 every time if we want to print from 1 to n
+			{
+				if(n == 0)
+					return;
+
+				cout<<k<<" ";
+
+				fun(n - 1, k + 1);
+
+			}
+	Eg:
+		tail recursvive function for recursion:
+				int fact(int n, int k)
+				{
+					if(n == 0 || n == 1)
+						return k;
+
+					return fact(n - 1, k * n);
+
+				}
