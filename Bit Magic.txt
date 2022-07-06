@@ -118,10 +118,62 @@ FIND THE ODD TIME OCCURING NUMBER IN AN ARRAY:
 			 so 3 will be the answer. 
 	
 	Another variation is to find the missing number in an array of n+1 numbers.
+		given an array of n number that has values in range[1... n+1]. every no appears once, henc
+		one no is missing. findthe missing no.
 		sol: do xor of all the number in that array and take the resultant array
 			and do xor with all the number from 1 to n.
 ---------------------------------------------------------------------------
-
+ Two Odd Occurring:
+	i/p: arr[] = {3,4,3,4,5,4,4,6,7,7}
+	o/p: 5 6
+	
+soln: 	1) do xor of all numbers
+			xor of arr[] = result = 5^6 101^110 = 011
+		2) we consider binary repre of 3 as 011 and takes its last set bit
+		3) Now divide the array into two groups such that one group is having
+			the last bit as set and other group has last bit as unset.
+				group1 {3,3,5,7,7}
+				group2 {4,4,4,4,6} the reason for dividing them into two groups is 		
+							In xor operation if the resultant is 1 then both the numbers has
+							different set bits in that place.
+		4) now we do xor of all in numbers in each group, the even occuring numbers will cancel out each other 
+			and the odd occuing numbers remains. 
+		void oddAppearing(int arr[], int n)
+		{
+			
+				int xors = 0, res1 = 0, res2 = 0; 
+				
+				for (int i = 0; i < n; i++) 
+				xors = xors ^ arr[i]; 
+		  
+		   
+				int sn = xors & (~(xors - 1));  //IMPORTANT: expression to find the right most set bit in that number
+		  
+			
+				for (int i = 0; i < n; i++) 
+				{ 
+					if ((arr[i] & sn) != 0) 
+						res1 = res1 ^ arr[i]; 
+					else
+						res2 = res2 ^ arr[i]; 
+				} 
+				
+				
+				cout <<  res1 << " " << res2;
+		}
+											
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ ---------------------------------------------------------------------------
 SWAP ALL EVEN BITS AND ODD BITS:	
 	eg: The task is to swap all odd bits with even bits. For example, if the given number is 23 (00010111), 
 	it should be converted to 43(00101011). Here, every even position bit is swapped with adjacent bit on the 
@@ -133,4 +185,39 @@ SWAP ALL EVEN BITS AND ODD BITS:
        return (((n & 0xAAAAAAAA) >> 1) | ((n & 0x55555555) << 1));
 
    }
+   
+ ---------------------------------------------------------------------------
+ GENERATING POWER SET OF GIVEN SET USING BITWISE OPERATOR:
+	I/P: s = "abc"
+	o/p: "", "a","b","c","ab","ac","bc","abc"
+	
+	I/P: s = "ab"
+	O/P: "","a","b","ab"
+	000 ""
+	001 a
+	010 b
+	011 ab
+	100 c         1 1 1
+	101 ac        c b a
+	110 bc
+	111 abc
+	 
+	
+	void printPowerSet(string str)
+		{
+			int n = str.length();
+
+			int powSize = pow(2, n);
+
+			for(int counter = 0; counter < powSize; counter++)
+			{
+				for(int j = 0; j < n; j++)
+				{
+					if((counter & (1 << j)) != 0)
+						cout<<str[j];
+				}
+				
+				cout<<endl;
+			}
+		}
    
