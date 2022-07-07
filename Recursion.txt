@@ -148,12 +148,54 @@ TAIL RECURSION:
 
 			}
 	Eg:
-		tail recursvive function for recursion:
+		tail recursvive function for recursion: factorial function.
 				int fact(int n, int k)
 				{
 					if(n == 0 || n == 1)
 						return k;
 
-					return fact(n - 1, k * n);
+					return fact(n - 1, k * n); //initially k = 1
 
 				}
+----------------------------------------------------------------
+SUM OF NNUMBERS USING RECURSION:
+	int getSum(int n)
+	{
+		if(n == 0)
+			return 0;
+
+		return n + getSum(n - 1);
+
+	}
+------------------------------------------------------------------	
+FIBANACCI OF A NUMBER USING RECURSION:
+	int fib(int n)
+	{
+		if (n <= 1)
+			return n;
+		return fib(n-1) + fib(n-2);
+	}
+------------------------------------------------------------------
+PALINDROME CHECK USING RECURSION:
+	bool isPalindrome(string str, int start, int end)
+	{
+		if(start >= end)
+			return true;
+
+		return ((str[start]==str[end]) && 
+				 isPalindrome(str, start + 1, end - 1));
+	}
+-------------------------------------------------------------------
+SUM OF DIGITS USING RECURSION: nut the iterative solution of this problem is preferred 
+	int fun(int n)
+	{
+		if(n < 10)
+			return n;
+
+		return fun(n / 10) + n % 10;
+	}
+--------------------------------------------------------------------
+ROPE CUTTING PROBLEM:
+we need to cut he ropes such that we will have maximum number of pieces.
+	I/P:
+		n=5, a=2, b=5, c=1
