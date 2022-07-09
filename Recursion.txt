@@ -199,3 +199,65 @@ ROPE CUTTING PROBLEM:
 we need to cut he ropes such that we will have maximum number of pieces.
 	I/P:
 		n=5, a=2, b=5, c=1
+		O/P: 5 => 5 cuts with size 1
+	I/P:
+		n = 23, a= 12, b=9, c=11
+		O/P: 2
+	I/P: 	
+		n = 5, a=4, c=6
+		O/P: -1
+	int maxCuts(int n, int a, int b, int c)
+	{
+		if(n == 0)
+			return 0;
+		if(n <= -1)
+			return -1;
+
+		int res = max(maxCuts(n-a, a, b, c), 
+				  max(maxCuts(n-b, a, b, c), 
+				  maxCuts(n-c, a, b, c)));
+
+		if(res == -1)
+			return -1;
+
+		return res + 1; 
+	}
+----------------------------------------------------------------------
+GENERATE SUBSETS OF A GIVEN STRING:
+	 there is  already an iterative solution for this using bit magic,
+	 here we use recursion.
+	 
+		void printSub(string str, string curr, int index)
+			{
+				if(index == str.length())
+				{
+					cout<<curr<<" ";
+					return;
+				}
+
+				printSub(str, curr, index + 1);
+				printSub(str, curr+str[index], index + 1);
+			}
+				
+			int main() {
+				
+				string str = "ABC";
+					
+				printSub(str, "", 0);
+				
+				return 0;
+			}
+			
+-----------------------------------------------------------------------
+TOWER OF Hanoi:
+	void ToH(int n, char A, char B, char C) 
+		{ 
+			if (n == 1) 
+			{ 
+				cout<<"Move 1 from " <<  A << " to " << C << endl; 
+				return; 
+			} 
+			ToH(n-1, A, C, B); 
+			cout<<"Move " << n << " from " <<  A << " to " << C << endl; 
+			ToH(n-1, B, A, C); 
+		}
