@@ -247,6 +247,27 @@ GENERATE SUBSETS OF A GIVEN STRING:
 				
 				return 0;
 			}
+-----------------------------------------------------------------------
+SUBSET SUM PROBLEM USING RECURSION:
+	I/P: [10,5,3,2,6] , sum = 8
+	O/P: 2(5+3=8, 6+2 = 8)
+	
+	I/P: [1,2,3] , sum =4
+	O/P: 1
+	
+	I/P: [10,20,15], sum = 37
+	O/P: 0
+	
+	I/P: [10,20,15], sum = 0
+	O/P: 1 , empty subset has sum as "0".
+	
+	int countSubsets(int arr[], int n, int sum)
+		{
+			if(n==0)
+				return sum==0? 1 : 0;
+
+			return countSubsets(arr, n-1, sum) + countSubsets(arr, n-1, sum - arr[n-1]);
+		}
 			
 -----------------------------------------------------------------------
 TOWER OF Hanoi:
@@ -261,3 +282,61 @@ TOWER OF Hanoi:
 			cout<<"Move " << n << " from " <<  A << " to " << C << endl; 
 			ToH(n-1, B, A, C); 
 		}
+-------------------------------------------------------------------------
+JOSEPHU'S PROBLEM:
+refer video lecture to understand the problem
+the solution below is when the circle positions starts with "1" but not 0.
+#include <iostream>
+using namespace std;
+
+
+int jos(int n, int k)
+{
+	if(n == 1)
+		return 0;
+	else
+		return (jos(n - 1, k) + k) % n;
+}
+
+int myJos(int n, int k)
+{
+	return jos(n, k) + 1;
+}
+	
+int main() {
+	
+	cout<<myJos(5, 3); 
+	
+	return 0;
+}
+----------------------------------------------------------------------------------
+PRINTING ALL PERMUTATIONS OF A STRING:
+
+I/P: S = "ABC"
+O/P: ABC, ACB, BAC, BCA, CAB, CBA
+
+I/P: S= "AB"
+O/P: AB, BA
+
+void permute(string str, int i,int j)
+	{
+		if (i == j-1)
+			{
+			    cout<<str<<endl;
+			    return;
+			}
+		else
+		{
+			for (int k= i; k <= j-1; k++)
+			{
+				swap(str[i], str[k]);        // STL `swap()` used
+ 
+        // recur for substring `str[i+1, n-1]`
+        permute(str, i + 1, j);
+ 
+        // backtrack (restore the string to its original state)
+        swap(str[i], str[k]);
+			}
+		}
+	}
+s
