@@ -249,6 +249,9 @@ GENERATE SUBSETS OF A GIVEN STRING:
 			}
 -----------------------------------------------------------------------
 SUBSET SUM PROBLEM USING RECURSION:
+
+	Prepare a tree which includes the current character and not includes the current character. This
+	type of recursion problems are very important.
 	I/P: [10,5,3,2,6] , sum = 8
 	O/P: 2(5+3=8, 6+2 = 8)
 	
